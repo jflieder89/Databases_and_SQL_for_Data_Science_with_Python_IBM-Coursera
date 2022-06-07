@@ -1,0 +1,33 @@
+DROP PROCEDURE IF EXISTS UPDATE_LEADERS_SCORE;
+--#SET TERMINATOR @
+DELIMITER @
+CREATE PROCEDURE UPDATE_LEADERS_SCORE (IN in_School_ID INTEGER, IN in_Leader_Score INTEGER)
+LANGUAGE SQL
+	BEGIN
+	ALTER TABLE chicago_public_schools
+	MODIFY COLUMN Leaders_Icon VARCHAR(12);
+    	UPDATE chicago_public_schools
+        SET Leaders_Score = in_Leader_Score
+        WHERE School_ID = in_School_ID;
+        IF in_Leader_Score > 0 AND in_Leader_Score < 20 THEN
+	      	UPDATE chicago_public_schools
+			SET Leaders_Icon = 'Very Weak'
+			WHERE in_School_ID = School_ID AND in_Leader_Score = Leaders_Score;
+	    ELSEIF in_Leader_Score < 40 THEN
+	       	UPDATE chicago_public_schools
+			SET Leaders_Icon = 'Weak'
+			WHERE in_School_ID = School_ID AND in_Leader_Score = Leaders_Score;
+        ELSEIF in_Leader_Score < 60 THEN
+	       	UPDATE chicago_public_schools
+			SET Leaders_Icon = 'Average'
+			WHERE in_School_ID = School_ID AND in_Leader_Score = Leaders_Score;
+        ELSEIF in_Leader_Score < 80 THEN
+	       	UPDATE chicago_public_schools
+			SET Leaders_Icon = 'Strong'
+			WHERE in_School_ID = School_ID AND in_Leader_Score = Leaders_Score;
+        ELSEIF in_Leader_Score < 100 THEN
+	       	UPDATE chicago_public_schools
+			SET Leaders_Icon = 'Very Strong'
+			WHERE in_School_ID = School_ID AND in_Leader_Score = Leaders_Score;
+	   	END IF;
+	END @
