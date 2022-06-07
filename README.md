@@ -1,1 +1,1 @@
-# Databases_and_SQL_for_Data_Science_with_Python_IBM-Coursera
+Here are some of my assignments for the Databases and SQL for Data Science with Python course from IBM via Coursera.
